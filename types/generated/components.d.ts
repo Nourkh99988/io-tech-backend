@@ -1,5 +1,31 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedContactInfo extends Struct.ComponentSchema {
+  collectionName: 'components_shared_contact_infos';
+  info: {
+    displayName: 'ContactInfo';
+  };
+  attributes: {
+    email: Schema.Attribute.Email;
+    phoneNumber: Schema.Attribute.String & Schema.Attribute.Unique;
+    whatssapp: Schema.Attribute.String & Schema.Attribute.Unique;
+  };
+}
+
+export interface SharedImage extends Struct.ComponentSchema {
+  collectionName: 'components_shared_images';
+  info: {
+    displayName: 'image';
+  };
+  attributes: {
+    alt: Schema.Attribute.String;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -57,19 +83,33 @@ export interface SharedSlider extends Struct.ComponentSchema {
     displayName: 'Slider';
     icon: 'address-book';
   };
+  attributes: {};
+}
+
+export interface SharedSliderCardContent extends Struct.ComponentSchema {
+  collectionName: 'components_shared_slider_card_contents';
+  info: {
+    displayName: 'sliderCardContent';
+  };
   attributes: {
-    files: Schema.Attribute.Media<'images', true>;
+    description: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    picture: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.contact-info': SharedContactInfo;
+      'shared.image': SharedImage;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.slider-card-content': SharedSliderCardContent;
     }
   }
 }

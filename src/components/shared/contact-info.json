@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_contact_infos",
+  "info": {
+    "displayName": "ContactInfo"
+  },
+  "options": {},
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "phoneNumber": {
+      "type": "string",
+      "unique": true,
+      "regex": "^\\+?[0-9]{7,15}$"
+    },
+    "whatssapp": {
+      "type": "string",
+      "unique": true
+    }
+  },
+  "config": {}
+}
