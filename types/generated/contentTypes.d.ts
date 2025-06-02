@@ -413,93 +413,101 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     blocks: Schema.Attribute.DynamicZone<
       ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
-    >;
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
-    cover: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
       }>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::article.article'
-    > &
-      Schema.Attribute.Private;
+    >;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
   };
 }
 
-export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
-  collectionName: 'authors';
+export interface ApiClientClient extends Struct.CollectionTypeSchema {
+  collectionName: 'clients';
   info: {
-    description: 'Create authors for your content';
-    displayName: 'Author';
-    pluralName: 'authors';
-    singularName: 'author';
+    displayName: 'Client';
+    pluralName: 'clients';
+    singularName: 'client';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::author.author'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::client.client'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    paragraph: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    photo: Schema.Attribute.Component<'shared.image', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    position: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
-  collectionName: 'categories';
-  info: {
-    description: 'Organize your content into categories';
-    displayName: 'Category';
-    pluralName: 'categories';
-    singularName: 'category';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -538,6 +546,64 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiServiceService extends Struct.CollectionTypeSchema {
+  collectionName: 'services';
+  info: {
+    displayName: 'service';
+    pluralName: 'services';
+    singularName: 'service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service.service'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    section: Schema.Attribute.Component<'shared.service-section', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSliderSlider extends Struct.CollectionTypeSchema {
   collectionName: 'sliders';
   info: {
@@ -566,7 +632,7 @@ export interface ApiSliderSlider extends Struct.CollectionTypeSchema {
     link: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     locale: Schema.Attribute.String;
@@ -584,6 +650,37 @@ export interface ApiSliderSlider extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSubscribeSubscribe extends Struct.CollectionTypeSchema {
+  collectionName: 'subscribes';
+  info: {
+    displayName: 'subscribe';
+    pluralName: 'subscribes';
+    singularName: 'subscribe';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::subscribe.subscribe'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -609,7 +706,7 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
     contacts: Schema.Attribute.Component<'shared.contact-info', false> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     createdAt: Schema.Attribute.DateTime;
@@ -626,10 +723,10 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    photo: Schema.Attribute.Component<'shared.image', true> &
+    photo: Schema.Attribute.Component<'shared.image', false> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
     postion: Schema.Attribute.String &
@@ -1156,10 +1253,11 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::article.article': ApiArticleArticle;
-      'api::author.author': ApiAuthorAuthor;
-      'api::category.category': ApiCategoryCategory;
+      'api::client.client': ApiClientClient;
       'api::global.global': ApiGlobalGlobal;
+      'api::service.service': ApiServiceService;
       'api::slider.slider': ApiSliderSlider;
+      'api::subscribe.subscribe': ApiSubscribeSubscribe;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

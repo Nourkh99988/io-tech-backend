@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "sliders",
+  "collectionName": "services",
   "info": {
-    "singularName": "slider",
-    "pluralName": "sliders",
-    "displayName": "Slider"
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "service"
   },
   "options": {
     "draftAndPublish": true
@@ -21,33 +21,37 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "targetField": "title",
+      "required": true
     },
     "description": {
-      "type": "string",
+      "type": "text",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "link": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      }
-    },
-    "photo": {
+    "section": {
       "type": "component",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "shared.image",
-      "repeatable": false
+      "component": "shared.service-section",
+      "repeatable": true
     }
   }
 }
